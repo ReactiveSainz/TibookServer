@@ -24,7 +24,13 @@ const books = [
 ];
 
 const typeDefs = gql`
-  # Comments in GraphQL are defined with the hash (#) symbol.
+  enum Role {
+    ADMIN
+    REVIEWER
+    USER
+    UNKNOWN
+  }
+
   type Book {
     id: String!
     title: String
@@ -61,14 +67,6 @@ const resolvers = {
     author: Book => Authors.find(author => author.id == Book.authorId)
   }
 };
-
-// const directiveResolvers = {
-//   hasRole: (next, source, { role }, ctx) => {
-//     const user = getUser();
-//     if (role === user.role) return next();
-//     throw new Error(`Must have role: ${role}, you have role: ${user.role}`);
-//   }
-// };
 
 const server = new ApolloServer({
   typeDefs,
