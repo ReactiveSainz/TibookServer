@@ -1,0 +1,21 @@
+{
+  "name": "TibookServer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.0.5",
+    "graphql": "^0.13.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
