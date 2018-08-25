@@ -34,7 +34,23 @@ const resolvers = {
   }
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+  playground: true,
+  playground: {
+    settings: {
+      "editor.theme": "light"
+    },
+    tabs: [
+      {
+        endpoint,
+        query: defaultQuery
+      }
+    ]
+  }
+});
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").load();
