@@ -36,6 +36,11 @@ const resolvers = {
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen().then(({ url }) => {
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").load();
+}
+
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  //console.log("fsfsdfsd", process.env);
   console.log(`🚀  Server ready at ${url}`);
 });
