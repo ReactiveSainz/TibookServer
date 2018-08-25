@@ -42,13 +42,7 @@ const server = new ApolloServer({
   playground: {
     settings: {
       "editor.theme": "light"
-    },
-    tabs: [
-      {
-        endpoint,
-        query: defaultQuery
-      }
-    ]
+    }
   }
 });
 
