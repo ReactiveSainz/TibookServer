@@ -1,4 +1,11 @@
-const { ApolloServer, gql } = require("apollo-server");
+import { ApolloServer, gql } from "apollo-server";
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+
+import Schema from "./src/schema/";
+import Resolver from "./src/resolvers";
+
+import UserModel from "./src/models/User";
 
 const Authors = [
   { name: "sainz", role: "admin", id: "0" },
@@ -23,12 +30,25 @@ const books = [
   }
 ];
 
+const getMe = async req => {
+  const token = req.headers["token"];
+
+  if (token) {
+    try {
+      return await jwt.verify(token, process.env.SECRET).then(data => {
+        console.log("data", data);
+        return data;
+      });
+    } catch (e) {
+      throw new AuthenticationError("Your session expired. Sign in again.");
+    }
+  }
+};
+
 const typeDefs = gql`
   enum Role {
-    ADMIN
-    REVIEWER
-    USER
-    UNKNOWN
+    admin
+    user
   }
 
   type Book {
@@ -50,13 +70,12 @@ const typeDefs = gql`
     authorById(id: String!): Author
     bookById(id: String!): Book
   }
-
 `;
 
 const resolvers = {
   Query: {
     books: () => books,
-    authors: () => Authors.map(author => author.name),
+    authors: () => Authors,
     authorById: (root, { id }) => Authors.find(author => author.id == id),
     bookById: (root, { id }) => books.find(book => book.id == id)
   },
@@ -69,8 +88,8 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: Schema,
+  resolvers: Resolver,
   introspection: true,
   playground: true,
   playground: {
@@ -78,6 +97,13 @@ const server = new ApolloServer({
       "editor.theme": "light",
       "editor.cursorShape": "block"
     }
+  },
+  context: async ({ req, connection, ...args }) => {
+    const me = getMe(req);
+    return {
+      me,
+      secret: process.env.SECRET
+    };
   }
 });
 
@@ -85,7 +111,25 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").load();
 }
 
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-  //console.log("fsfsdfsd", process.env);
-  console.log(`🚀  Server ready at ${url}`);
+mongoose.connect("mongodb://127.0.0.1/Proyect");
+
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function() {
+  /* const user = new UserModel({
+    name: "sainz2",
+    email: "sainz2@gmail.com",
+    password: "abc123",
+    gender: "male",
+    role: "admin"
+  });
+
+  user.save((err, user) => {
+    if (err) console.log(err);
+    else console.log(user);
+  }); */
+
+  server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+  });
 });
