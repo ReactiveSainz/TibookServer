@@ -32,14 +32,13 @@ export default {
 
   signIn: async (parent, { email, password }, { secret }) => {
     console.log("data", { email, password });
-    const user = await UserModel.findOne({ email: email }).then(
-      (user, error) => user
-    );
+    const user = await UserModel.findOne({ email: email });
+
     if (!user) {
       throw new UserInputError("No user found with this login credentials.");
     }
 
-    let isValid = user.comparePassword(password);
+    let isValid = await user.comparePassword(password);
     console.log("dfsdfsd", isValid);
     if (!isValid) {
       throw new AuthenticationError("Invalid password.");

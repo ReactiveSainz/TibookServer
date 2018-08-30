@@ -5,8 +5,8 @@ export default {
     if (!me) {
       return null;
     }
-
-    return await UserModel.findById(me.id);
+    const user = await UserModel.findById(me.id);
+    return user;
   },
   users: async (parent, args, context) => await UserModel.find(),
   userByName: async (parent, { name }, context) =>
