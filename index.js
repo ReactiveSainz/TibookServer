@@ -114,7 +114,11 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").load();
 }
 
-mongoose.connect("mongodb://127.0.0.1/Proyect");
+mongoose.connect(
+  `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${
+    process.env.DATABASE
+  }`
+);
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
