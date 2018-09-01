@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/index.js",
+    "clean": "rm -rf build && mkdir build",
+    "build": "npm run clean && npm run build-babel",
+    "build-babel": "babel -d ./build index.js -s",
+    "start": "npm run build && node ./build/index.js",
     "dev": "nodemon --exec babel-node index.js"
   },
   "keywords": [],
