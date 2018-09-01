@@ -12,4 +12,5 @@ const linkSchema = gql`
     _: Boolean
   }
 `;
+
 export default [linkSchema, userSchema];
