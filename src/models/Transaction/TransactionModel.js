@@ -1,20 +1,41 @@
-const transaction = (sequelize, DataTypes) => {
-  const Transaction = sequelize.define("transaction", {
-    total: {
-      type: DataTypes.FLOAT,
-      validate: { notEmpty: true }
-    },
-    subTotal: {
-      type: DataTypes.FLOAT,
-      validate: { notEmpty: true }
-    }
-  });
+import mongoose, { Schema } from "mongoose";
 
-  Transaction.associate = models => {
-    Transaction.belongsTo(models.User);
-  };
+const TransactionSchema = new mongoose.Schema({
+  amount: {
+    type: Number,
+    required: true
+  },
+  /* charges:{
+    type:Array,
+    required:true
+  }, */
+  total: {
+    type: Number,
+    required: true
+  },
+  ownerId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  buyerId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  stripeChargeId: {
+    type: String,
+    required: true
+  },
+  paymentType: {
+    type: String,
+    enum: ["creditCard", "other"],
+    default: "other"
+  },
+  created: Date,
+  finalized: Date
+});
 
-  return Transaction;
-};
+const Transaction = mongoose.model("Transaction", TransactionSchema);
 
-export default transaction;
+export default Transaction;
