@@ -1,5 +1,4 @@
-import { UserModel } from "../../models/";
-
+import { UserModel, PublicationModel } from "../../models/";
 export default {
   me: async (parent, args, { me }) => {
     if (!me) {

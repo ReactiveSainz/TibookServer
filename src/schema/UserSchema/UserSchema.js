@@ -33,5 +33,6 @@ export default gql`
     role: String
     gender: String
     defaultCreditCard: ID
+    publications: [Publication]
   }
 `;
