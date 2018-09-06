@@ -20,6 +20,10 @@ const PublicationSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  quantity: {
+    type: Number,
+    default: 1
   }
 });
 

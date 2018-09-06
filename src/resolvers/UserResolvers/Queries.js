@@ -10,5 +10,5 @@ export default {
   },
   users: async (parent, args, context) => await UserModel.find(),
   userByName: async (parent, { name }, context) =>
-    await UserModel.find({ name: new RegExp(name, "i") })
+    UserModel.find({ name: new RegExp(name, "i") })
 };

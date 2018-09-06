@@ -30,12 +30,12 @@ const UserSchema = new mongoose.Schema({
   hashed_password: {
     type: String,
     default: ""
-  },
-  defaultCreditCard: {
+  }
+  /* defaultCreditCard: {
     type: Schema.Types.ObjectId,
     ref: "CreditCard",
     default: ""
-  }
+  } */
 });
 
 UserSchema.virtual("password").set(function(password) {

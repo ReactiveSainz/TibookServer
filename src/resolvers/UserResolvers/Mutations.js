@@ -27,7 +27,7 @@ export default {
 
     await user.save();
 
-    return { token: createToken(user, secret, "30m") };
+    return { token: createToken(user, secret, "1y") };
   },
 
   signIn: async (parent, { email, password }, { secret }) => {
