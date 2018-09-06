@@ -1,4 +1,8 @@
 import userSchema from "./UserSchema";
+import transactionSchema from "./TransactionSchema";
+import publicationSchema from "./PublicationSchema";
+import creditCardSchema from "./CreditCardSchema";
+
 import { gql } from "apollo-server";
 
 const linkSchema = gql`
@@ -13,4 +17,10 @@ const linkSchema = gql`
   }
 `;
 
-export default [linkSchema, userSchema];
+export default [
+  linkSchema,
+  userSchema,
+  creditCardSchema,
+  publicationSchema,
+  transactionSchema
+];
