@@ -5,8 +5,6 @@ import mongoose from "mongoose";
 import Schema from "./src/schema/";
 import Resolver from "./src/resolvers";
 
-import UserModel from "./src/models/User";
-
 const Authors = [
   { name: "sainz", role: "admin", id: "0" },
   { name: "sfsdfsd", role: "user", id: "1" }
@@ -123,19 +121,6 @@ mongoose.connect(
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {
-  /* const user = new UserModel({
-    name: "sainz2",
-    email: "sainz2@gmail.com",
-    password: "abc123",
-    gender: "male",
-    role: "admin"
-  });
-
-  user.save((err, user) => {
-    if (err) console.log(err);
-    else console.log(user);
-  }); */
-
   server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
