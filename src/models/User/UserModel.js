@@ -1,16 +1,22 @@
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const UserSchema = new mongoose.Schema({
+  created: Date,
+  updated: Date,
   name: String,
+  lastName: String,
+  nickName: {
+    type: String,
+    unique: true
+  },
   email: {
     type: String,
     unique: true,
     lowercase: true,
     required: [true, "can't be blank"],
-    match: [/\S+@\S+\.\S+/, "is invalid"],
-    index: true
+    match: [/\S+@\S+\.\S+/, "is invalid"]
   },
   gender: {
     type: String,
@@ -23,6 +29,11 @@ const UserSchema = new mongoose.Schema({
   },
   hashed_password: {
     type: String,
+    default: ""
+  },
+  defaultCreditCard: {
+    type: Schema.Types.ObjectId,
+    ref: "CreditCard",
     default: ""
   }
 });

@@ -27,10 +27,11 @@ export default gql`
   }
 
   type User {
-    name: String!
     id: ID!
+    name: String!
     email: String!
     role: String
     gender: String
+    defaultCreditCard: ID
   }
 `;
