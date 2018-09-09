@@ -29,6 +29,7 @@
     "graphql-resolvers": "^0.2.2",
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
+    "mongodb-moment": "^1.0.1",
     "mongoose": "^5.2.10",
     "mongoose-unique-validator": "^2.0.1",
     "stripe": "^6.10.0"

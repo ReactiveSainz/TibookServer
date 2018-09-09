@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 

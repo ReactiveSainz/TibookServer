@@ -1,5 +1,12 @@
 import { gql } from "apollo-server";
 
+
+import {
+  GraphQLDate,
+  GraphQLTime,
+  GraphQLDateTime
+} from 'graphql-iso-date';
+
 export default gql`
   extend type Query {
     me: User
@@ -28,11 +35,15 @@ export default gql`
 
   type User {
     id: ID!
+    created: GraphQLDateTime
+    updated:GraphQLDateTime
     name: String!
     email: String!
+    nickname: String!
     role: String
     gender: String
     defaultCreditCard: ID
     publications: [Publication]
+    
   }
 `;

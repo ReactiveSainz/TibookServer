@@ -3,6 +3,9 @@ import { UserModel } from "../../models/";
 import { combineResolvers } from "graphql-resolvers";
 import { isAuthenticated, isAdmin } from "../Authorization";
 import { AuthenticationError, UserInputError } from "apollo-server";
+import moment from "moment";
+
+moment.locale("es");
 
 const createToken = async (user, secret, expiresIn) => {
   const { id, email, username, role } = user;
@@ -22,12 +25,13 @@ export default {
       email,
       password,
       gender,
-      role
+      role,
+      created: moment().valueOf()
     });
 
     await user.save();
 
-    return { token: createToken(user, secret, "1y") };
+    return { token: createToken(user, secret, "10000m") };
   },
 
   signIn: async (parent, { email, password }, { secret }) => {
