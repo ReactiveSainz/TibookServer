@@ -4,6 +4,7 @@ import { combineResolvers } from "graphql-resolvers";
 import { isAuthenticated, isAdmin } from "../Authorization";
 import { AuthenticationError, UserInputError } from "apollo-server";
 import moment from "moment";
+require("mongodb-moment")(moment);
 
 moment.locale("es");
 
