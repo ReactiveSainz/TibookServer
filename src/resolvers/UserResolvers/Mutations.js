@@ -37,7 +37,9 @@ export default {
   },
 
   signIn: async (parent, { email, password }, { secret }) => {
-    const user = await UserModel.findOne({ email: email });
+    const user = await UserModel.findOne({
+      $or: [{ email: email }, { nickname: email }]
+    });
     if (!user) {
       throw new UserInputError("No user found with this login credentials.");
     }

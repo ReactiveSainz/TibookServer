@@ -27,8 +27,6 @@ export default {
           publication.type = type;
           publication.price = price;
           publication.quantity = quantity;
-
-          await 
         } else {
           throw new ForbiddenError("forbidden");
         }
