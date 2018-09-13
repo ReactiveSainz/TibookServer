@@ -15,7 +15,6 @@ export default gql`
 
     updatePublication(
       id: ID!
-      bookISBN: String!
       type: String!
       price: Float!
       quantity: Int!
@@ -23,6 +22,7 @@ export default gql`
   }
 
   type Publication {
+    id: ID!
     bookISBN: String!
     type: String!
     price: Float!

@@ -18,20 +18,21 @@ const createToken = async (user, secret, expiresIn) => {
 export default {
   signUp: async (
     parent,
-    { name, email, password, gender, role },
+    { name, lastname, email, password, gender, role, nickname },
     { secret }
   ) => {
     const user = new UserModel({
       name,
+      lastname,
       email,
       password,
       gender,
       role,
+      nickname,
       created: moment().valueOf()
     });
 
     await user.save();
-
     return { token: createToken(user, secret, "10000m") };
   },
 
@@ -49,9 +50,10 @@ export default {
 
   updateUser: combineResolvers(
     isAuthenticated,
-    async (parent, { name }, { me }) => {
+    async (parent, { id, name }, { me }) => {
       const user = await UserModel.findById(me.id);
       user.name = name;
+      user.updated = moment().valueOf();
       return await user.save();
     }
   ),

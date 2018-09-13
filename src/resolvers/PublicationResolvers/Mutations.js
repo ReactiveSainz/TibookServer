@@ -19,19 +19,22 @@ export default {
   ),
   updatePublication: combineResolvers(
     isAuthenticated,
-    async (parent, { id, bookISBN, type, price, quantity }, { secret, me }) => {
+    async (parent, { id, type, price, quantity }, { secret, me }) => {
       const publication = await PublicationModel.findById(id);
-      /* if (publication) {
-        if(publication.userId === me.id){
-          publication
-        }
-        else{
+
+      if (publication) {
+        if (publication.userId === me.id) {
+          publication.type = type;
+          publication.price = price;
+          publication.quantity = quantity;
+
+          await 
+        } else {
           throw new ForbiddenError("forbidden");
         }
+      }
 
-      } */
-
-      return publication;
+      return await publication.save();
     }
   )
 };

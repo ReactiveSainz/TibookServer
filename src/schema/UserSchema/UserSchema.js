@@ -1,6 +1,6 @@
 import { gql } from "apollo-server";
 
-import { GraphQLDate, GraphQLTime, GraphQLDateTime } from "graphql-iso-date";
+/* import { GraphQLDate, GraphQLTime, GraphQLDateTime } from "graphql-iso-date"; */
 
 export default gql`
   extend type Query {
@@ -13,13 +13,15 @@ export default gql`
   extend type Mutation {
     signUp(
       name: String!
+      lastname: String!
       email: String!
       password: String!
       gender: String!
       role: String
+      nickname: String!
     ): Token!
 
-    signIn(email: String!, password: String!): Token!
+    signIn(email: String, nickname: String, password: String!): Token!
     updateUser(name: String!): User!
     deleteUser(id: ID!): Boolean!
   }
@@ -30,13 +32,14 @@ export default gql`
 
   type User {
     id: ID!
-    created: String
+    created: String!
     updated: String
     name: String!
+    lastname: String!
     email: String!
     nickname: String!
-    role: String
-    gender: String
+    role: String!
+    gender: String!
     defaultCreditCard: ID
     publications: [Publication]
   }
