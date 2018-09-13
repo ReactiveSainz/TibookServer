@@ -21,8 +21,8 @@ export default gql`
       nickname: String!
     ): Token!
 
-    signIn(email: String, nickname: String, password: String!): Token!
-    updateUser(name: String!): User!
+    signIn(mainField: String!, password: String!): Token!
+    updateUser(name: String, lastname: String): User!
     deleteUser(id: ID!): Boolean!
   }
 

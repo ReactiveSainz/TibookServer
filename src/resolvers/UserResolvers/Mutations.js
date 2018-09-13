@@ -36,9 +36,9 @@ export default {
     return { token: createToken(user, secret, "10000m") };
   },
 
-  signIn: async (parent, { email, password }, { secret }) => {
+  signIn: async (parent, { mainField, password }, { secret }) => {
     const user = await UserModel.findOne({
-      $or: [{ email: email }, { nickname: email }]
+      $or: [{ email: mainField }, { nickname: mainField }]
     });
     if (!user) {
       throw new UserInputError("No user found with this login credentials.");
@@ -52,9 +52,10 @@ export default {
 
   updateUser: combineResolvers(
     isAuthenticated,
-    async (parent, { id, name }, { me }) => {
+    async (parent, { name, lastname }, { me }) => {
       const user = await UserModel.findById(me.id);
-      user.name = name;
+      user.name = name || user.name;
+      user.lastname = lastname || user.lastname;
       user.updated = moment().valueOf();
       return await user.save();
     }
