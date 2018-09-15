@@ -52,9 +52,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 mongoose.connect(
-  `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${
-    process.env.DATABASE
-  }`
+  `mongodb://127.0.0.1/Proyect`
 );
 
 var db = mongoose.connection;
