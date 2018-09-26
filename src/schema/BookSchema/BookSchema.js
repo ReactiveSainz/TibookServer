@@ -1,0 +1,21 @@
+import { gql } from "apollo-server";
+
+export default gql`
+  extend type Query{
+    findBookbyISBN (bookISBN: String):Book
+  }
+
+  type Book {
+    id: ID
+    title: String!
+    authors: [String]
+    publisher: String
+    publishedDate: Int
+    pageCount: Int
+    imageLinks: [String]
+  }
+
+  type Author {
+    name: String!
+  }
+`;

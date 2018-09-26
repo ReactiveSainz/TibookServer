@@ -3,6 +3,10 @@ import { UserModel } from "../../models/";
 import { combineResolvers } from "graphql-resolvers";
 import { isAuthenticated, isAdmin } from "../Authorization";
 import { AuthenticationError, UserInputError } from "apollo-server";
+import moment from "moment";
+require("mongodb-moment")(moment);
+
+moment.locale("es");
 
 const createToken = async (user, secret, expiresIn) => {
   const { id, email, username, role } = user;
@@ -14,24 +18,28 @@ const createToken = async (user, secret, expiresIn) => {
 export default {
   signUp: async (
     parent,
-    { name, email, password, gender, role },
+    { name, lastname, email, password, gender, role, nickname },
     { secret }
   ) => {
     const user = new UserModel({
       name,
+      lastname,
       email,
       password,
       gender,
-      role
+      role,
+      nickname,
+      created: moment().valueOf()
     });
 
     await user.save();
-
-    return { token: createToken(user, secret, "1y") };
+    return { token: createToken(user, secret, "10000m") };
   },
 
-  signIn: async (parent, { email, password }, { secret }) => {
-    const user = await UserModel.findOne({ email: email });
+  signIn: async (parent, { mainField, password }, { secret }) => {
+    const user = await UserModel.findOne({
+      $or: [{ email: mainField }, { nickname: mainField }]
+    });
     if (!user) {
       throw new UserInputError("No user found with this login credentials.");
     }
@@ -44,9 +52,11 @@ export default {
 
   updateUser: combineResolvers(
     isAuthenticated,
-    async (parent, { name }, { me }) => {
+    async (parent, { name, lastname }, { me }) => {
       const user = await UserModel.findById(me.id);
-      user.name = name;
+      user.name = name || user.name;
+      user.lastname = lastname || user.lastname;
+      user.updated = moment().valueOf();
       return await user.save();
     }
   ),

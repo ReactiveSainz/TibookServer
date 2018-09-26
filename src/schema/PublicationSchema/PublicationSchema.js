@@ -3,7 +3,6 @@ import { gql } from "apollo-server";
 export default gql`
   extend type Query {
     publications: [Publication!]
-    findBookbyISBN (bookISBN: String):[String]
   }
 
   extend type Mutation {
@@ -13,9 +12,17 @@ export default gql`
       price: Float!
       quantity: Int!
     ): Publication
+
+    updatePublication(
+      id: ID!
+      type: String!
+      price: Float!
+      quantity: Int!
+    ): Publication
   }
 
   type Publication {
+    id: ID!
     bookISBN: String!
     type: String!
     price: Float!

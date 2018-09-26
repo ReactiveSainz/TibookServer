@@ -6,10 +6,11 @@ const UserSchema = new mongoose.Schema({
   created: Date,
   updated: Date,
   name: String,
-  lastName: String,
-  nickName: {
+  lastname: String,
+  nickname: {
     type: String,
-    unique: true
+    unique: true,
+    required: true
   },
   email: {
     type: String,
@@ -30,12 +31,11 @@ const UserSchema = new mongoose.Schema({
   hashed_password: {
     type: String,
     default: ""
-  }
-  /* defaultCreditCard: {
+  },
+  defaultCreditCard: {
     type: Schema.Types.ObjectId,
-    ref: "CreditCard",
-    default: ""
-  } */
+    ref: "CreditCard"
+  }
 });
 
 UserSchema.virtual("password").set(function(password) {
