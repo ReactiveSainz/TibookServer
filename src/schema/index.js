@@ -2,6 +2,7 @@ import userSchema from "./UserSchema";
 import transactionSchema from "./TransactionSchema";
 import publicationSchema from "./PublicationSchema";
 import creditCardSchema from "./CreditCardSchema";
+import bookSchema from "./BookSchema"
 
 import { gql } from "apollo-server";
 
@@ -22,5 +23,6 @@ export default [
   userSchema,
   creditCardSchema,
   publicationSchema,
-  transactionSchema
+  transactionSchema,
+  bookSchema
 ];
