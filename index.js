@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer, AuthenticationError } from "apollo-server";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
@@ -9,7 +9,6 @@ import { UserModel } from "./src/models";
 
 const getMe = async req => {
   const token = req.headers["token"];
-
   if (token) {
     try {
       const me = await jwt.verify(
@@ -17,6 +16,7 @@ const getMe = async req => {
         process.env.SECRET,
         (err, decoded) => decoded
       );
+      console.log("me", me);
       if (me) {
         const user = await UserModel.findById(me.id);
         return user;
@@ -25,6 +25,7 @@ const getMe = async req => {
       throw new AuthenticationError("Your session expired. Sign in again.");
     }
   }
+  return null;
 };
 
 const server = new ApolloServer({
@@ -39,7 +40,9 @@ const server = new ApolloServer({
     }
   },
   context: async ({ req, connection, ...args }) => {
+    console.log("requesting");
     const me = await getMe(req);
+    console.log("me", me);
     return {
       me,
       secret: process.env.SECRET

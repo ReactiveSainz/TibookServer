@@ -8,10 +8,10 @@ require("mongodb-moment")(moment);
 
 moment.locale("es");
 
-const createToken = async (user, secret, expiresIn) => {
+const createToken = async (user, secret, expiresIn = null) => {
   const { id, email, username, role } = user;
   return await jwt.sign({ id, email, username, role }, secret, {
-    expiresIn
+    ...(expiresIn && { expiresIn })
   });
 };
 
@@ -33,9 +33,9 @@ export default {
     });
 
     await user.save();
-    return { token: createToken(user, secret, "10000m") };
-  },
 
+    return { token: createToken(user, secret) };
+  },
   signIn: async (parent, { mainField, password }, { secret }) => {
     const user = await UserModel.findOne({
       $or: [{ email: mainField }, { nickname: mainField }]
