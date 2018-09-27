@@ -9,15 +9,20 @@ export default{
     if(!bookISBN){
       return null;
     }
-    
+  
+
     return fetch('https://www.googleapis.com/books/v1/volumes?q='+ bookISBN +'+isbn')
     .then(function(response) {
       return response.json();
     })
     .then(function(myJson) {
       
-      console.log(myJson.items[0].volumeInfo);
-      return myJson.items[0].volumeInfo;
+      const book = {
+        ...myJson.items[0].volumeInfo,
+        imageLinks: [myJson.items[0].volumeInfo.imageLinks.smallThumbnail,myJson.items[0].volumeInfo.imageLinks.thumbnail]
+      }
+      
+      return book;
     });
   }
 };

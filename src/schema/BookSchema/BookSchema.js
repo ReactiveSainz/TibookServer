@@ -10,6 +10,7 @@ export default gql`
     title: String!
     authors: [String]
     publisher: String
+    description: String
     publishedDate: Int
     pageCount: Int
     imageLinks: [String]
