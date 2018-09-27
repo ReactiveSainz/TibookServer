@@ -1,19 +1,28 @@
-import bookApi from "google-books-search";
+//import bookApi from "google-books-search";
+import { BookModel } from "../../models/"; 
+import "isomorphic-fetch";
+import BookSchema from "../../schema/BookSchema/BookSchema";
 
-const options = {
-  key: process.env.GOOGLE_KEY,
-  field: "isbn",
-  offset: 0,
-  limit: 10,
-  type: "books",
-  order: "relevance",
-  lang: "es"
-};
+export default{
+  findBookbyISBN: (parent, {bookISBN}, context) => {
 
-/* books.search("Professional JavaScript for Web Developers", options, function(error, results, apiResponse) {
-    if ( ! error ) {
-        console.log(results);
-    } else {
-        console.log(error);
+    if(!bookISBN){
+      return null;
     }
-}); */
+  
+
+    return fetch('https://www.googleapis.com/books/v1/volumes?q='+ bookISBN +'+isbn')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      
+      const book = {
+        ...myJson.items[0].volumeInfo,
+        imageLinks: [myJson.items[0].volumeInfo.imageLinks.smallThumbnail,myJson.items[0].volumeInfo.imageLinks.thumbnail]
+      }
+      
+      return book;
+    });
+  }
+};
