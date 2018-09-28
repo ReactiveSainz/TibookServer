@@ -1,7 +1,4 @@
-//import bookApi from "google-books-search";
-import { BookModel } from "../../models/"; 
 import "isomorphic-fetch";
-import BookSchema from "../../schema/BookSchema/BookSchema";
 
 export default{
   findBookbyISBN: (parent, {bookISBN}, context) => {
@@ -10,18 +7,21 @@ export default{
       return null;
     }
   
-
     return fetch('https://www.googleapis.com/books/v1/volumes?q='+ bookISBN +'+isbn')
     .then(function(response) {
       return response.json();
     })
     .then(function(myJson) {
+
+      let thumbnails =[]
+      if(myJson.items[0].volumeInfo.imageLinks)
+          Object.values(myJson.items[0].volumeInfo.imageLinks).map(key=>thumbnails.push(key))
       
       const book = {
         ...myJson.items[0].volumeInfo,
-        imageLinks: [myJson.items[0].volumeInfo.imageLinks.smallThumbnail,myJson.items[0].volumeInfo.imageLinks.thumbnail]
+        ...(thumbnails.length>=1 ? {imageLinks : thumbnails} : {imageLinks:["pruebaimagen"]})
       }
-      
+            
       return book;
     });
   }
