@@ -6,7 +6,8 @@ import { isAuthenticated, isAdmin } from "../Authorization";
 import { AuthenticationError, UserInputError } from "apollo-server";
 import moment from "moment";
 
-var stripe = require("stripe")("sk_test_ZkfNxv8qYN15b6bWsfqHYPDX");
+const stripeKey = process.env.STRIPE_KEY;
+var stripe = require("stripe")(stripeKey);
 
 require("mongodb-moment")(moment);
 
@@ -29,6 +30,7 @@ export default {
       email
     });
 
+    console.log("customer", customer);
     if (!customer) return null;
     // console.log("customer", customer);
 
