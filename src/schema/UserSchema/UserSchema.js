@@ -19,7 +19,7 @@ export default gql`
       gender: String!
       role: String
       nickname: String!
-    ): Token!
+    ): Token
 
     signIn(mainField: String!, password: String!): Token!
     updateUser(name: String, lastname: String): User!
@@ -42,5 +42,6 @@ export default gql`
     gender: String!
     defaultCreditCard: ID
     publications: [Publication]
+    addresses: [Address]
   }
 `;

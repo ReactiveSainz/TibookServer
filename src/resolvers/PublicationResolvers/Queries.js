@@ -1,6 +1,5 @@
-import { PublicationModel } from "../../models/"; 
-import { BookModel } from "../../models/"; 
-import "isomorphic-fetch";
+import { PublicationModel } from "../../models/";
+import { BookModel } from "../../models/";
 
 export default {
   publications: async (parent, args, context) => await PublicationModel.find()

@@ -16,7 +16,7 @@ const getMe = async req => {
         process.env.SECRET,
         (err, decoded) => decoded
       );
-      console.log("me", me);
+    
       if (me) {
         const user = await UserModel.findById(me.id);
         return user;
@@ -40,9 +40,9 @@ const server = new ApolloServer({
     }
   },
   context: async ({ req, connection, ...args }) => {
-    console.log("requesting");
+    
     const me = await getMe(req);
-    console.log("me", me);
+    
     return {
       me,
       secret: process.env.SECRET

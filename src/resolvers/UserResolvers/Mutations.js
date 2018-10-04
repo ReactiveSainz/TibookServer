@@ -2,8 +2,12 @@ import jwt from "jsonwebtoken";
 import { UserModel } from "../../models/";
 import { combineResolvers } from "graphql-resolvers";
 import { isAuthenticated, isAdmin } from "../Authorization";
+
 import { AuthenticationError, UserInputError } from "apollo-server";
 import moment from "moment";
+
+var stripe = require("stripe")("sk_test_ZkfNxv8qYN15b6bWsfqHYPDX");
+
 require("mongodb-moment")(moment);
 
 moment.locale("es");
@@ -21,6 +25,13 @@ export default {
     { name, lastname, email, password, gender, role, nickname },
     { secret }
   ) => {
+    const customer = await stripe.customers.create({
+      email
+    });
+
+    if (!customer) return null;
+    // console.log("customer", customer);
+
     const user = new UserModel({
       name,
       lastname,
@@ -29,6 +40,7 @@ export default {
       gender,
       role,
       nickname,
+      customerId: customer.id,
       created: moment().valueOf()
     });
 

@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  customerId: {
+    type: String,
+    required: true
+  },
   defaultCreditCard: {
     type: Schema.Types.ObjectId,
     ref: "CreditCard"

@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
 const CreditCardSchema = new mongoose.Schema({
-  ownerId: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
-  stripeId: {
+  stripeCardId: {
     type: String,
     required: true
   }
