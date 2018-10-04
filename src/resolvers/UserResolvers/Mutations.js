@@ -7,7 +7,7 @@ import { AuthenticationError, UserInputError } from "apollo-server";
 import moment from "moment";
 
 const stripeKey = process.env.STRIPE_KEY;
-var stripe = require("stripe")(stripeKey);
+var stripe = require("stripe")(stripeKey || "sk_test_ZkfNxv8qYN15b6bWsfqHYPDX");
 
 require("mongodb-moment")(moment);
 
