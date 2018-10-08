@@ -22,5 +22,35 @@ export default {
       await newCard.save();
       return newCard;
     }
+  ),
+  deleteCreditCard: combineResolvers(
+    isAuthenticated,
+    async (parent, { stripeCardId }, { secret, me }) => {
+      const cardDeletedRes = await stripe.customers.deleteCard(
+        me.customerId,
+        stripeCardId
+      );
+      console.log("cardDeletedRes", cardDeletedRes);
+      if (cardDeletedRes) return cardDeletedRes;
+
+      return null;
+    }
+  ),
+  setDefaultCard: combineResolvers(
+    isAuthenticated,
+    async (parent, { stripeCardId }, { secret, me }) => {
+      return stripe.customers.update(
+        me.customerId,
+        {
+          default_source: stripeCardId
+        },
+        function(err, customer) {
+          if (err) return "error";
+
+          return "ok";
+        }
+      );
+      console.log("fsfsd sdfsdf ds");
+    }
   )
 };
