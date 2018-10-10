@@ -6,8 +6,7 @@ import { isAuthenticated, isAdmin } from "../Authorization";
 import { AuthenticationError, UserInputError } from "apollo-server";
 import moment from "moment";
 
-const stripeKey = process.env.STRIPE_KEY;
-var stripe = require("stripe")(stripeKey || "sk_test_ZkfNxv8qYN15b6bWsfqHYPDX");
+var stripe = require("stripe")(process.env.STRIPE_KEY; || "sk_test_ZkfNxv8qYN15b6bWsfqHYPDX");
 
 require("mongodb-moment")(moment);
 
@@ -46,6 +45,7 @@ export default {
       created: moment().valueOf()
     });
 
+    console.log("new User",user)
     await user.save();
 
     return { token: createToken(user, secret) };

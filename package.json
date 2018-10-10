@@ -12,7 +12,7 @@
     "build": "npm run clean && npm run build-babel",
     "build-babel": "babel -d ./build index.js -s",
     "start": "babel-node index.js",
-    "heroku-postbuild": "npm install",
+    "heroku-postbuild": "rm -rf node_modules && npm install",
     "dev": "nodemon --exec babel-node index.js"
   },
   "keywords": [],
