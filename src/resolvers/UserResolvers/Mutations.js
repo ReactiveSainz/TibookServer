@@ -68,12 +68,13 @@ export default {
 
   updateUser: combineResolvers(
     isAuthenticated,
-    async (parent, { name, lastname }, { me }) => {
-      const user = await UserModel.findById(me.id);
-      user.name = name || user.name;
-      user.lastname = lastname || user.lastname;
-      user.updated = moment().valueOf();
-      return await user.save();
+    async (parent,data , { me }) => {
+      return UserModel.findByIdAndUpdate(me.id, { ...data,updated:moment().valueOf(); }, { new: true })
+      .then(res => {
+        console.log("res", res);
+        return res;
+      })
+      .catch({});
     }
   ),
 
