@@ -16,5 +16,28 @@ export default {
       await Address.save();
       return Address;
     }
+  ),
+  updateAddress: combineResolvers(
+    isAuthenticated,
+    async (parent, { id, ...data }, { secret, me }) => {
+      return AddressModel.findByIdAndUpdate(id, { ...data }, { new: true })
+        .then(res => {
+          console.log("res", res);
+          return res;
+        })
+        .catch({});
+    }
+  ),
+  deleteAddress: combineResolvers(
+    isAuthenticated,
+    async (parent, { id }, { secret, me }) => {
+      return AddressModel.findByIdAndDelete(id)
+        .then(res => {
+          return "ok";
+        })
+        .catch(error => {
+          return "error";
+        });
+    }
   )
 };

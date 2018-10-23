@@ -10,6 +10,19 @@ export default gql`
       number: String!
       intNumber: String
     ): Address
+
+    updateAddress(
+      id: ID!
+      state: String
+      city: String
+      neighborhood: String
+      cp: String
+      street: String
+      number: String
+      intNumber: String
+    ): Address
+
+    deleteAddress(id: ID!): String
   }
 
   type Address {
