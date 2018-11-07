@@ -1,5 +1,8 @@
 import { gql } from "apollo-server";
 export default gql`
+  extend type Query {
+    addresses: [Address]
+  }
   extend type Mutation {
     addAddress(
       state: String!

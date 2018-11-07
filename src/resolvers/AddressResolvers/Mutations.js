@@ -31,6 +31,7 @@ export default {
   deleteAddress: combineResolvers(
     isAuthenticated,
     async (parent, { id }, { secret, me }) => {
+      console.log("id",id)
       return AddressModel.findByIdAndDelete(id)
         .then(res => {
           return "ok";
