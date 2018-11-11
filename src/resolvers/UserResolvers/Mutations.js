@@ -15,8 +15,8 @@ require("mongodb-moment")(moment);
 moment.locale("es");
 
 const createToken = async (user, secret, expiresIn = null) => {
-  const { id, email, username, role } = user;
-  return await jwt.sign({ id, email, username, role }, secret, {
+  const { id, email, nickname, role } = user;
+  return await jwt.sign({ id, email, nickname, role }, secret, {
     ...(expiresIn && { expiresIn })
   });
 };

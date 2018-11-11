@@ -1,6 +1,4 @@
 //import bookApi from "google-books-search";
-import { BookModel } from "../../models/";
-import BookSchema from "../../schema/BookSchema/BookSchema";
 import "isomorphic-fetch";
 
 export default {
@@ -9,7 +7,8 @@ export default {
       return null;
     }
 
-    return fetch('https://www.googleapis.com/books/v1/volumes?q='+ bookISBN +'+isbn')
+    // return fetch('https://www.googleapis.com/books/v1/volumes?q='+ bookISBN +'+isbn')
+    return fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn%3D${bookISBN}&key=AIzaSyBTS_QWrvMiF_hyVhnra7zIHlkiLMnFOEA`)
     .then(function(response) {
       return response.json();
     })
