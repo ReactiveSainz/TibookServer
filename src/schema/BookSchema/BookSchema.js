@@ -1,8 +1,9 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  extend type Query{
-    findBookbyISBN (bookISBN: String):Book
+  extend type Query {
+    findBookbyISBN(bookISBN: String): Book
+    findBooks(bookISBN: String): [Book]
   }
 
   type Book {

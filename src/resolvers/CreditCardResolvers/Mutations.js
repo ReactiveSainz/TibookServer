@@ -9,12 +9,11 @@ export default {
   createCreditCard: combineResolvers(
     isAuthenticated,
     async (parent, { cardToken }, { secret, me }) => {
-      //console.log("me", me);//me._id
       const card = await stripe.customers.createSource(me.customerId, {
         source: cardToken
       });
 
-      console.log("card", card);
+      // console.log("card", card);
       const newCard = new CreditCardModel({
         userId: me._id,
         stripeCardId: card.id
@@ -31,9 +30,16 @@ export default {
         stripeCardId
       );
       console.log("cardDeletedRes", cardDeletedRes);
-      if (cardDeletedRes) return cardDeletedRes;
+      if (cardDeletedRes)
+        return {
+          id: stripeCardId,
+          deleted: true
+        };
 
-      return null;
+      return {
+        id: stripeCardId,
+        deleted: false
+      };
     }
   ),
   setDefaultCard: combineResolvers(

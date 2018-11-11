@@ -9,6 +9,7 @@ export default gql`
 
   extend type Query {
     creditCards: [CreditCardData]
+    defaultCard: String!
   }
 
   type CreditCard {
