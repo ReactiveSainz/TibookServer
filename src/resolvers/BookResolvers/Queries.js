@@ -1,6 +1,4 @@
 //import bookApi from "google-books-search";
-import { BookModel } from "../../models/";
-import BookSchema from "../../schema/BookSchema/BookSchema";
 import "isomorphic-fetch";
 
 export default {
