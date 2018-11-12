@@ -9,6 +9,7 @@ export default {
   createCreditCard: combineResolvers(
     isAuthenticated,
     async (parent, { cardToken }, { secret, me }) => {
+      console.log("me", me); //me._id
       const card = await stripe.customers.createSource(me.customerId, {
         source: cardToken
       });

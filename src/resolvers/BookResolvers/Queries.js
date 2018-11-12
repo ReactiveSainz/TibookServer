@@ -1,4 +1,3 @@
-//import bookApi from "google-books-search";
 import "isomorphic-fetch";
 
 export default {
