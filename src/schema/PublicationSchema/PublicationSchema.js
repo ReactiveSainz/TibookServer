@@ -3,8 +3,9 @@ import { gql } from "apollo-server";
 export default gql`
   extend type Query {
     publications: [Publication!]
+    publicationsByType(bookType: String): [Publication!]
   }
-
+  
   extend type Mutation {
     createPublication(
       bookISBN: String!
