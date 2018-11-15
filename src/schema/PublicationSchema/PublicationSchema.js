@@ -29,5 +29,6 @@ export default gql`
     price: Float!
     quantity: Int!
     userId: String!
+    thumbnail: String
   }
 `;

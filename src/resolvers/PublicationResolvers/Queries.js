@@ -2,20 +2,21 @@ import { PublicationModel } from "../../models/";
 
 export default {
   publications: async (parent, args, context) => await PublicationModel.find(),
-  publicationsByType: (parent, {bookType}, context) => {
-    var arr;
-    var resultPublication = PublicationModel.find({type:bookType}, (err,publications) =>{
+  publicationsByType: async (parent, {bookType}, context) => await PublicationModel.find({type:bookType}, (err, data) => {
       
-      if(err) console.log(err)
+    data.map(publication => {
+      publication.set('thumbnail','test2', String,{strict: false});
+      publication.set('thumbnail3',"test3", String,{strict: false});
       
-      publications.map( publication => {
-        arr = publication
-        console.log(publication)
-      })
-    })
-
-    console.log(arr);
-
-    return resultPublication;
-  }
+      return publication;
+    });
+      
+    data.forEach( test => console.log("===================\n", test) )
+  })
+//   .aggregate( [
+//     {
+//       $addFields: { thumbnail:
+//         { $add: [ "$totalHomework", "$totalQuiz", "$extraCredit" ] } }
+//     }
+//  ] )
 };
